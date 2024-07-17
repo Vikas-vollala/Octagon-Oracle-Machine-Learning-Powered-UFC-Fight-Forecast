@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict a Fight - Octagon Oracle</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: url('{{ url_for('static', filename='assets/img/input.jpg') }}') no-repeat center center fixed;
+            background-size: cover;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .form-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+            color: white;
+        }
+
+        .form-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #f2f2f2;
+        }
+
+        .form-container label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Predict a Fight</h1>
+            <form action="/predict" method="post">
+                <label for="stat1">Takedown Attempts:</label>
+                <input type="number" id="stat1" name="stat1" required>
+                
+                <label for="stat2">Significant Strikes Landed:</label>
+                <input type="number" id="stat2" name="stat2" required>
+
+                <label for="stat3">Significant Strikes Absorbed:</label>
+                <input type="number" id="stat3" name="stat3" required>
+
+                <label for="stat4">Control Time (seconds):</label>
+                <input type="number" id="stat4" name="stat4" required>
+
+                <label for="stat5">Submission Attempts:</label>
+                <input type="number" id="stat5" name="stat5" required>
+
+                <button type="submit">Predict</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

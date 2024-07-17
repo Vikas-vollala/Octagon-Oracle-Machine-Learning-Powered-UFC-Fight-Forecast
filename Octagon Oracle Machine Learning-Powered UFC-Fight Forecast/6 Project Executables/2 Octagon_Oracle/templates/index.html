@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Octagon Oracle: UFC Fight Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+</head>
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top header-inner-pages">
+    <div class="container d-flex align-items-center justify-content-between">
+        <h1 class="logo"><a href="/">Octagon Oracle</a></h1>
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto active" href="/">Home</a></li>
+                <li><a class="nav-link scrollto" href="#about">About</a></li>
+                <li><a class="nav-link scrollto" href="#services">How It Works</a></li>
+                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                <li><a href="/predict">Predict a Fight</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+    </div>
+</header>
+<!-- End Header -->
+
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+    <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+        <div class="carousel-item active" style="background-image: url(static/assets/img/slide/slide-1.jpg)">
+            <div class="carousel-container">
+                <div class="container">
+                    <h2 class="animated fadeInDown">Welcome to <span>Octagon Oracle</span></h2>
+                    <p class="animated fadeInUp">Your go-to tool for predicting UFC fight outcomes using machine learning.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Hero -->
+
+<main id="main">
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 video-box d-flex justify-content-center align-items-stretch" data-aos="zoom-in"></div>
+                <div class="col-xl-6 col-lg-6 d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
+                    <div class="box-heading" data-aos="fade-up">
+                        <h4>About Us</h4>
+                        <h3>Welcome to Octagon Oracle</h3>
+                        <p>Octagon Oracle is a cutting-edge platform designed to predict the outcomes of UFC fights. Our predictions are based on historical fight data and advanced algorithms. We aim to provide accurate and insightful forecasts to enhance your understanding of the sport.</p>
+                    </div>
+                    <h4>Key Features</h4>
+                    <div class="icon-box" data-aos="fade-up">
+                        <div class="icon"><i class="bx bx-fingerprint"></i></div>
+                        <h4 class="title"><a href="">Advanced Data Analysis</a></h4>
+                        <p class="description">Our platform utilizes state-of-the-art algorithms to analyze fight data, providing precise predictions for upcoming matches.</p>
+                    </div>
+                    <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                        <div class="icon"><i class="bx bx-gift"></i></div>
+                        <h4 class="title"><a href="">User-Friendly Interface</a></h4>
+                        <p class="description">Octagon Oracle features an intuitive interface that allows users to easily input fight data and obtain detailed prediction results.</p>
+                    </div>
+                    <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+                        <div class="icon"><i class="bx bx-atom"></i></div>
+                        <h4 class="title"><a href="">Continual Improvement</a></h4>
+                        <p class="description">We are committed to ongoing refinement of our algorithms and methodologies, ensuring that Octagon Oracle remains at the forefront of fight prediction technology.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End About Section -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+        <div class="container-fluid">
+            <div class="section-title" data-aos="zoom-in">
+                <h2>How It Works</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="box" data-aos="fade-up">
+                        <span>01</span>
+                        <h4>Data Collection</h4>
+                        <p>We gather historical fight data from various sources to ensure comprehensive coverage and accuracy.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-4 mt-lg-0">
+                    <div class="box" data-aos="fade-up" data-aos-delay="100">
+                        <span>02</span>
+                        <h4>Data Analysis</h4>
+                        <p>Our algorithms analyze the data, considering various factors such as fighter statistics, previous performance, and fight conditions.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="200">
+                    <div class="box">
+                        <span>03</span>
+                        <h4>Prediction Output</h4>
+                        <p>The analyzed data is used to generate predictions, which are then presented to the user in an easy-to-understand format.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Services Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container-fluid">
+            <div class="section-title">
+                <h1>Contact Us</h1>
+                <p>
+                    A108 Adam Street <br>
+                    Gachibowli, HYD 500036<br>
+                    Telangana <br><br>
+                    <strong>Phone:</strong> +91 7337894563<br>
+                    <strong>Email:</strong> info@octagonoracle.com<br>
+                </p>
+            </div>
+        </div>
+    </section>
+    <!-- End Contact Section -->
+</main>
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-xl-10">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 footer-contact">
+                            <h4>Contact Us</h4>
+                            <p>
+                                A108 Adam Street <br>
+                                Gachibowli, HYD 500036<br>
+                                Telangana <br><br>
+                                <strong>Phone:</strong> +91 7337894563<br>
+                                <strong>Email:</strong> info@octagonoracle.com<br>
+                            </p>
+                        </div>
+                        <div class="col-lg-3 col-md-6 footer-info">
+                            <h3>About Octagon Oracle</h3>
+                            <p>Welcome to Octagon Oracle, your ultimate destination for accurate UFC fight predictions based on historical data and machine learning algorithms.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="copyright">
+            &copy; Copyright <strong><span>Octagon Oracle</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            Designed by <a href="https://octagon
