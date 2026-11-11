@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predict | Octagon Oracle</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="nav-brand">
+    <span class="nav-logo">⬡ OCTAGON ORACLE</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/predict" class="active">Predict</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</nav>
+
+<div class="predict-bg"></div>
+
+<div class="predict-page">
+  <div class="predict-header">
+    <p class="section-label" style="justify-content:center;">⚡ Fight Prediction Engine</p>
+    <h1>Enter Fighter Stats</h1>
+    <p>Fill in both fighters' career statistics to generate an AI-powered prediction.</p>
+  </div>
+
+  {% if error %}
+  <div style="max-width: 980px; margin: 0 auto;">
+    <div class="alert alert-error">⚠ {{ error }}</div>
+  </div>
+  {% endif %}
+
+  <form method="POST" action="/predict">
+    <div class="vs-grid">
+
+      <!-- ── FIGHTER A (RED CORNER) ── -->
+      <div class="fighter-card red-card">
+        <div class="card-header">
+          <span class="corner-badge red">Red Corner</span>
+          <h2>Fighter A</h2>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Fighter Name</label>
+          <input class="form-fighter-name" type="text" name="fighter_a_name"
+                 placeholder="e.g. Jon Jones" required>
+        </div>
+
+        <div class="form-divider">Record</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Total Wins</label>
+            <input class="form-input" type="number" name="a_wins" min="0" value="20" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Total Losses</label>
+            <input class="form-input" type="number" name="a_losses" min="0" value="1" required>
+          </div>
+        </div>
+
+        <div class="form-divider">Finish Methods</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">KO/TKO Wins</label>
+            <input class="form-input" type="number" name="a_ko_wins" min="0" value="10">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Submission Wins</label>
+            <input class="form-input" type="number" name="a_sub_wins" min="0" value="3">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Decision Wins</label>
+          <input class="form-input" type="number" name="a_dec_wins" min="0" value="7">
+        </div>
+
+        <div class="form-divider">Striking Stats (career avg)</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Sig. Strike Acc. %</label>
+            <input class="form-input" type="number" name="a_str_acc" min="0" max="100" step="0.1" value="55">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Takedown Acc. %</label>
+            <input class="form-input" type="number" name="a_td_acc" min="0" max="100" step="0.1" value="42">
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Sub Attempts / Fight</label>
+            <input class="form-input" type="number" name="a_sub_att" min="0" step="0.1" value="0.8">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ctrl Time (sec/fight)</label>
+            <input class="form-input" type="number" name="a_ctrl" min="0" step="1" value="150">
+          </div>
+        </div>
+
+        <div class="form-divider">Physical Attributes</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Height (cm)</label>
+            <input class="form-input" type="number" name="a_height" min="140" max="220" value="193">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Reach (cm)</label>
+            <input class="form-input" type="number" name="a_reach" min="140" max="230" value="215">
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Age</label>
+            <input class="form-input" type="number" name="a_age" min="18" max="55" value="36">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Stance</label>
+            <select class="form-select" name="a_stance">
+              <option value="Orthodox">Orthodox</option>
+              <option value="Southpaw">Southpaw</option>
+              <option value="Switch">Switch</option>
+              <option value="Open Stance">Open Stance</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── VS DIVIDER ── -->
+      <div class="vs-divider">
+        <div class="vs-badge">VS</div>
+      </div>
+
+      <!-- ── FIGHTER B (BLUE CORNER) ── -->
+      <div class="fighter-card blue-card">
+        <div class="card-header">
+          <span class="corner-badge blue">Blue Corner</span>
+          <h2>Fighter B</h2>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Fighter Name</label>
+          <input class="form-fighter-name" type="text" name="fighter_b_name"
+                 placeholder="e.g. Stipe Miocic" required>
+        </div>
+
+        <div class="form-divider">Record</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Total Wins</label>
+            <input class="form-input" type="number" name="b_wins" min="0" value="20" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Total Losses</label>
+            <input class="form-input" type="number" name="b_losses" min="0" value="4" required>
+          </div>
+        </div>
+
+        <div class="form-divider">Finish Methods</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">KO/TKO Wins</label>
+            <input class="form-input" type="number" name="b_ko_wins" min="0" value="12">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Submission Wins</label>
+            <input class="form-input" type="number" name="b_sub_wins" min="0" value="2">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Decision Wins</label>
+          <input class="form-input" type="number" name="b_dec_wins" min="0" value="6">
+        </div>
+
+        <div class="form-divider">Striking Stats (career avg)</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Sig. Strike Acc. %</label>
+            <input class="form-input" type="number" name="b_str_acc" min="0" max="100" step="0.1" value="51">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Takedown Acc. %</label>
+            <input class="form-input" type="number" name="b_td_acc" min="0" max="100" step="0.1" value="38">
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Sub Attempts / Fight</label>
+            <input class="form-input" type="number" name="b_sub_att" min="0" step="0.1" value="0.4">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ctrl Time (sec/fight)</label>
+            <input class="form-input" type="number" name="b_ctrl" min="0" step="1" value="90">
+          </div>
+        </div>
+
+        <div class="form-divider">Physical Attributes</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Height (cm)</label>
+            <input class="form-input" type="number" name="b_height" min="140" max="220" value="193">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Reach (cm)</label>
+            <input class="form-input" type="number" name="b_reach" min="140" max="230" value="196">
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Age</label>
+            <input class="form-input" type="number" name="b_age" min="18" max="55" value="41">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Stance</label>
+            <select class="form-select" name="b_stance">
+              <option value="Orthodox">Orthodox</option>
+              <option value="Southpaw">Southpaw</option>
+              <option value="Switch">Switch</option>
+              <option value="Open Stance">Open Stance</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div><!-- end vs-grid -->
+
+    <!-- SUBMIT -->
+    <div class="predict-submit">
+      <button type="submit" class="btn btn-primary btn-full">
+        ⚡ &nbsp;Predict Winner
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<footer>
+  <p>Octagon Oracle &copy; 2024 &nbsp;·&nbsp; Built with Flask + XGBoost</p>
+</footer>
+
+</body>
+</html>

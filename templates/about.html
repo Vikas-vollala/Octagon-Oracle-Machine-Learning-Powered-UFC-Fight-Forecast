@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Octagon Oracle</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="nav-brand">
+    <span class="nav-logo">⬡ OCTAGON ORACLE</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/predict">Predict</a></li>
+    <li><a href="/about" class="active">About</a></li>
+  </ul>
+</nav>
+
+<div class="about-page">
+  <p class="section-label">Project Overview</p>
+  <h1>About Octagon Oracle</h1>
+  <p style="color:var(--text-muted); max-width:600px; margin-top:0.75rem; font-size:0.95rem;">
+    A machine-learning system that predicts UFC fight outcomes using historical fight data,
+    fighter statistics, and gradient-boosted decision trees.
+  </p>
+
+  <div class="about-grid">
+
+    <!-- PROJECT DESCRIPTION -->
+    <div class="about-card about-full">
+      <h3>What Is This?</h3>
+      <p>
+        Octagon Oracle is an end-to-end machine learning project that combines data science with
+        mixed martial arts analytics. It uses the Rajeev Warrier UFC dataset from Kaggle — over
+        5,000 historical UFC bouts — to train a predictive model that estimates fight outcomes
+        from pre-fight statistics.
+      </p>
+      <p>
+        The system encodes both fighters' career averages as a differential feature vector (Red minus Blue),
+        which makes the prediction matchup-aware rather than treating fighters in isolation. The best-performing
+        model is selected automatically based on AUC score and saved for use in the web application.
+      </p>
+    </div>
+
+    <!-- TECH STACK -->
+    <div class="about-card">
+      <h3>Tech Stack</h3>
+      <p><strong style="color:var(--text)">Machine Learning</strong></p>
+      <p>scikit-learn, XGBoost, pandas, numpy</p>
+      <br>
+      <p><strong style="color:var(--text)">Backend</strong></p>
+      <p>Python 3.10+, Flask, joblib</p>
+      <br>
+      <p><strong style="color:var(--text)">Frontend</strong></p>
+      <p>HTML5, CSS3, Vanilla JS, Chart.js</p>
+      <br>
+      <div>
+        <span class="tech-tag">XGBoost</span>
+        <span class="tech-tag">scikit-learn</span>
+        <span class="tech-tag">Flask</span>
+        <span class="tech-tag">pandas</span>
+        <span class="tech-tag">numpy</span>
+        <span class="tech-tag">joblib</span>
+        <span class="tech-tag">Chart.js</span>
+        <span class="tech-tag">Jupyter</span>
+      </div>
+    </div>
+
+    <!-- ML PIPELINE -->
+    <div class="about-card">
+      <h3>ML Pipeline</h3>
+      <div class="pipeline-step">
+        <div class="step-n">1</div>
+        <div class="step-text">
+          <strong>Data Loading</strong>
+          <span>Load preprocessed_data.csv from Kaggle UFC dataset</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-n">2</div>
+        <div class="step-text">
+          <strong>Preprocessing</strong>
+          <span>Filter Red/Blue outcomes, encode target variable</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-n">3</div>
+        <div class="step-text">
+          <strong>Feature Engineering</strong>
+          <span>Create differential features, win ratio, experience, stance matchup</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-n">4</div>
+        <div class="step-text">
+          <strong>Model Training</strong>
+          <span>Train Logistic Regression, Random Forest, XGBoost with 5-fold CV</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-n">5</div>
+        <div class="step-text">
+          <strong>Selection & Save</strong>
+          <span>Best model by AUC score is saved with joblib</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-n">6</div>
+        <div class="step-text">
+          <strong>Inference</strong>
+          <span>Flask app loads model and returns prediction + probability</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODEL PERFORMANCE -->
+    <div class="about-card">
+      <h3>Model Performance (typical)</h3>
+      <div class="model-row">
+        <div class="model-name">Logistic Regression</div>
+        <div class="model-bar-track"><div class="model-bar-fill" style="width:67%"></div></div>
+        <div class="model-acc">~67%</div>
+      </div>
+      <div class="model-row">
+        <div class="model-name">Random Forest</div>
+        <div class="model-bar-track"><div class="model-bar-fill" style="width:70%"></div></div>
+        <div class="model-acc">~70%</div>
+      </div>
+      <div class="model-row">
+        <div class="model-name">XGBoost</div>
+        <div class="model-bar-track"><div class="model-bar-fill" style="width:72%"></div></div>
+        <div class="model-acc">~72%</div>
+      </div>
+      <p style="margin-top:1.25rem; font-size:0.8rem;">
+        Accuracy varies slightly with dataset version and random seed.
+        The best model is selected automatically by AUC on held-out test data.
+      </p>
+    </div>
+
+    <!-- FEATURES USED -->
+    <div class="about-card">
+      <h3>Features Used (20+)</h3>
+      <p>All features are computed as Red − Blue differentials:</p>
+      <div style="margin-top:0.75rem;">
+        <span class="tech-tag">str_acc_diff</span>
+        <span class="tech-tag">td_acc_diff</span>
+        <span class="tech-tag">sub_att_diff</span>
+        <span class="tech-tag">ctrl_diff</span>
+        <span class="tech-tag">win_diff</span>
+        <span class="tech-tag">ko_diff</span>
+        <span class="tech-tag">sub_diff</span>
+        <span class="tech-tag">dec_diff</span>
+        <span class="tech-tag">height_diff</span>
+        <span class="tech-tag">reach_diff</span>
+        <span class="tech-tag">age_diff</span>
+        <span class="tech-tag">win_ratio_diff</span>
+        <span class="tech-tag">experience_diff</span>
+        <span class="tech-tag">stance_match</span>
+        <span class="tech-tag">R_is_southpaw</span>
+        <span class="tech-tag">B_is_southpaw</span>
+        <span class="tech-tag">wc_* dummies</span>
+        <span class="tech-tag">title_bout</span>
+      </div>
+    </div>
+
+    <!-- HOW TO RUN -->
+    <div class="about-card">
+      <h3>How To Run</h3>
+      <div class="pipeline-step">
+        <div class="step-n">1</div>
+        <div class="step-text">
+          <strong>Download Dataset</strong>
+          <span>Get preprocessed_data.csv from Kaggle (rajeevw/ufcdata) → place in dataset/</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-n">2</div>
+        <div class="step-text">
+          <strong>Install Dependencies</strong>
+          <span>pip install -r requirements.txt</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-n">3</div>
+        <div class="step-text">
+          <strong>Train Model</strong>
+          <span>python train_model.py</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-n">4</div>
+        <div class="step-text">
+          <strong>Run App</strong>
+          <span>python app.py → open http://localhost:5000</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-n">5</div>
+        <div class="step-text">
+          <strong>Explore Notebook</strong>
+          <span>jupyter notebook notebook/ufc_prediction.ipynb</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIMITATIONS -->
+    <div class="about-card">
+      <h3>Limitations & Disclaimer</h3>
+      <p>
+        This project is purely educational. Fight prediction is inherently uncertain — upsets happen
+        all the time in MMA. The model cannot account for camp changes, injuries, weight cuts,
+        psychological factors, or in-fight adaptations.
+      </p>
+      <p>
+        Career averages can be misleading for fighters who have significantly evolved their game,
+        or who are early in their career with a small sample size.
+      </p>
+      <p>
+        <strong style="color:var(--red)">Do not use this for gambling or financial decisions.</strong>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>Octagon Oracle &copy; 2024 &nbsp;·&nbsp; Built with Flask + XGBoost &nbsp;·&nbsp;
+     Dataset: <a href="https://www.kaggle.com/datasets/rajeevw/ufcdata" target="_blank">UFC Stats (Kaggle)</a>
+  </p>
+</footer>
+
+</body>
+</html>

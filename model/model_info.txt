@@ -1,0 +1,20 @@
+Best Model: Random Forest
+Features used: 17
+Feature list:
+  - str_acc_diff
+  - td_acc_diff
+  - sub_att_diff
+  - sig_str_att_diff
+  - sig_str_landed_diff
+  - td_att_diff
+  - td_landed_diff
+  - win_diff
+  - loss_diff
+  - dec_diff
+  - height_diff
+  - reach_diff
+  - age_diff
+  - opp_str_diff
+  - win_ratio_diff
+  - experience_diff
+  - title_bout

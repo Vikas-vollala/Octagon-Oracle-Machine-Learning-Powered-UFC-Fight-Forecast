@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Octagon Oracle | UFC Fight Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="nav-brand">
+    <span class="nav-logo">⬡ OCTAGON ORACLE</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/" class="active">Home</a></li>
+    <li><a href="/predict">Predict</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <svg class="hero-octagon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="70,5 130,5 195,70 195,130 130,195 70,195 5,130 5,70" stroke="white" stroke-width="1.5"/>
+    <polygon points="75,15 125,15 185,75 185,125 125,185 75,185 15,125 15,75" stroke="white" stroke-width="0.5"/>
+  </svg>
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    AI-Powered Fight Prediction
+  </div>
+  <h1 class="hero-title">WHO WINS<br><span class="line-red">THE OCTAGON?</span></h1>
+  <p class="hero-subtitle">
+    Machine learning meets mixed martial arts. Enter fighter statistics
+    and let our XGBoost model forecast the outcome with data-driven precision.
+  </p>
+  <div class="hero-cta">
+    <a href="/predict" class="btn btn-primary">⚡ Make a Prediction</a>
+    <a href="/about" class="btn btn-outline">How It Works</a>
+  </div>
+  <div class="scroll-hint">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    Scroll
+  </div>
+</section>
+
+<div style="padding: 0 2rem; max-width: 900px; margin: 0 auto;">
+  <div class="stats-strip">
+    <div class="stat-item"><div class="stat-num">5K+</div><div class="stat-label">Historical Fights</div></div>
+    <div class="stat-item"><div class="stat-num">~72%</div><div class="stat-label">Model Accuracy</div></div>
+    <div class="stat-item"><div class="stat-num">20+</div><div class="stat-label">Features Used</div></div>
+    <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Models Tested</div></div>
+  </div>
+</div>
+
+<section class="section">
+  <p class="section-label">How It Works</p>
+  <h2 class="section-title">Data-Driven<br>Fight Intelligence</h2>
+  <p class="section-sub">Our model analyzes 20+ statistical differentials between fighters to forecast who steps out of the octagon victorious.</p>
+  <div class="feature-grid">
+    <div class="feature-card"><span class="feature-icon">🥊</span><h3>Striking Analysis</h3><p>Significant strike accuracy, volume, and defensive metrics compared across career averages — not just last-fight stats.</p></div>
+    <div class="feature-card"><span class="feature-icon">🤼</span><h3>Grappling Metrics</h3><p>Takedown accuracy, submission attempts, and control time differentials that reveal ground game dominance.</p></div>
+    <div class="feature-card"><span class="feature-icon">📊</span><h3>Win Quality</h3><p>Finish rate breakdown (KO, submission, decision) plus career win ratio and opponent quality weighting.</p></div>
+    <div class="feature-card"><span class="feature-icon">⚡</span><h3>Physical Matchup</h3><p>Height, reach, age, and stance matchup differentials — the physical edges that matter in a real fight.</p></div>
+    <div class="feature-card"><span class="feature-icon">🤖</span><h3>XGBoost Model</h3><p>Gradient boosted decision trees trained on 5,000+ UFC fights with stratified cross-validation. No data leakage.</p></div>
+    <div class="feature-card"><span class="feature-icon">🎯</span><h3>Confidence Scoring</h3><p>Every prediction comes with a win probability score — so you know exactly how certain the model is.</p></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section style="padding: 5rem 2rem; max-width: 700px; margin: 0 auto;">
+  <div class="cta-banner">
+    <h2>Ready to Predict?</h2>
+    <p>Enter fighter statistics and get an instant ML-powered prediction with probability scores and visual breakdowns.</p>
+    <a href="/predict" class="btn btn-primary">Start Predicting →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Octagon Oracle &copy; 2024 &nbsp;·&nbsp; Built with Flask + XGBoost &nbsp;·&nbsp;
+     Dataset: <a href="https://www.kaggle.com/datasets/rajeevw/ufcdata" target="_blank">UFC Stats (Kaggle)</a>
+  </p>
+</footer>
+
+</body>
+</html>

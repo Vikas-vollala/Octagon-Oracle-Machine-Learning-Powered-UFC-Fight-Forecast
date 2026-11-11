@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Result | Octagon Oracle</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="nav-brand">
+    <span class="nav-logo">⬡ OCTAGON ORACLE</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/predict">Predict</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</nav>
+
+<div class="result-page">
+  <div class="result-header">
+    <p class="section-label">Prediction Result</p>
+  </div>
+
+  {% set is_red = result.winner_corner == 'Red' %}
+
+  <div style="max-width: 820px; margin: 0 auto;">
+
+    <!-- WINNER ANNOUNCE -->
+    <div class="winner-announce {{ 'red-winner' if is_red else 'blue-winner' }}">
+      <div class="winner-trophy">🏆</div>
+      <p class="winner-label">Predicted Winner</p>
+      <h1 class="winner-name {{ 'red-text' if is_red else 'blue-text' }}">
+        {{ result.winner }}
+      </h1>
+      <p class="winner-conf">
+        Confidence: <strong>{{ result.confidence }}%</strong>
+        &nbsp;·&nbsp; {{ result.winner_corner }} Corner
+      </p>
+    </div>
+
+    <!-- PROBABILITY BAR -->
+    <div class="prob-bar-section">
+      <div class="prob-labels">
+        <div>
+          <div class="prob-name red-text">{{ result.fighter_a }}</div>
+          <div class="prob-pct red-pct">{{ result.red_prob }}%</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="prob-name blue-text">{{ result.fighter_b }}</div>
+          <div class="prob-pct blue-pct">{{ result.blue_prob }}%</div>
+        </div>
+      </div>
+      <div class="prob-track">
+        <div class="prob-fill-red" id="redFill" style="width: 0%"></div>
+      </div>
+      <div class="prob-track-labels">
+        <span>Red Corner</span><span>Blue Corner</span>
+      </div>
+    </div>
+
+    <!-- STATS COMPARISON TABLE -->
+    <div class="comparison-section">
+      <p class="comparison-title">Fighter Comparison</p>
+      {% set a = result.stats_a %}
+      {% set b = result.stats_b %}
+      {% set rows = [
+        ('Wins',            a.wins,     b.wins),
+        ('Losses',          a.losses,   b.losses),
+        ('KO/TKO Wins',     a.ko_wins,  b.ko_wins),
+        ('Sub Wins',        a.sub_wins, b.sub_wins),
+        ('Decision Wins',   a.dec_wins, b.dec_wins),
+        ('Str. Acc. %',     a.str_acc,  b.str_acc),
+        ('TD Acc. %',       a.td_acc,   b.td_acc),
+        ('Sub Att./Fight',  a.sub_att,  b.sub_att),
+        ('Ctrl Time (s)',   a.ctrl,     b.ctrl),
+        ('Height (cm)',     a.height,   b.height),
+        ('Reach (cm)',      a.reach,    b.reach),
+        ('Age',             a.age,      b.age),
+        ('Stance',          a.stance,   b.stance),
+      ] %}
+      {% for label, av, bv in rows %}
+      {% set av_f = av|float(0) %}
+      {% set bv_f = bv|float(0) %}
+      {% set total = av_f + bv_f %}
+      <div class="comp-row">
+        <div class="comp-val red-side">{{ av }}</div>
+        <div>
+          <div class="comp-label">{{ label }}</div>
+          {% if total > 0 %}
+          <div class="comp-bar-wrap" style="margin-top:4px;">
+            <div class="mini-bar-red"  style="width:{{ [(av_f/total*80)|round|int, 2]|max }}px;"></div>
+            <div class="mini-bar-blue" style="width:{{ [(bv_f/total*80)|round|int, 2]|max }}px;"></div>
+          </div>
+          {% endif %}
+        </div>
+        <div class="comp-val blue-side">{{ bv }}</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- RADAR CHART -->
+    <div class="chart-card">
+      <p class="chart-title">Fighter Radar — Key Stats</p>
+      <div style="max-width: 400px; margin: 0 auto;">
+        <canvas id="radarChart" aria-label="Radar chart comparing key stats of both fighters"></canvas>
+      </div>
+    </div>
+
+    <!-- BAR CHART -->
+    <div class="chart-card">
+      <p class="chart-title">Record Breakdown</p>
+      <div style="position:relative; height:230px;">
+        <canvas id="barChart" aria-label="Bar chart comparing wins and losses"></canvas>
+      </div>
+    </div>
+
+    <!-- BACK BUTTONS -->
+    <div style="display:flex; gap:1rem; justify-content:center; margin-top:2rem; flex-wrap:wrap;">
+      <a href="/predict" class="btn btn-primary">← New Prediction</a>
+      <a href="/" class="btn btn-outline">Home</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>Octagon Oracle &copy; 2024 &nbsp;·&nbsp; Built with Flask + XGBoost</p>
+</footer>
+
+<script>
+// ── Animate probability bar ──
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    document.getElementById('redFill').style.width = '{{ result.red_prob }}%';
+  }, 200);
+});
+
+// ── Radar chart ──
+const radarCtx = document.getElementById('radarChart').getContext('2d');
+new Chart(radarCtx, {
+  type: 'radar',
+  data: {
+    labels: ['Str. Acc%', 'TD Acc%', 'Sub Att', 'Ctrl Time', 'Win Ratio', 'Reach'],
+    datasets: [
+      {
+        label: '{{ result.fighter_a }}',
+        data: [
+          {{ result.stats_a.str_acc|float(0) }},
+          {{ result.stats_a.td_acc|float(0) }},
+          Math.min({{ result.stats_a.sub_att|float(0) }} * 20, 100),
+          Math.min({{ result.stats_a.ctrl|float(0) }} / 6, 100),
+          {% set aw = result.stats_a.wins|float(0) %}
+          {% set al = result.stats_a.losses|float(0) %}
+          {% if aw + al > 0 %}{{ (aw / (aw + al) * 100)|round(1) }}{% else %}50{% endif %},
+          Math.min(({{ result.stats_a.reach|float(180) }} - 160) * 2, 100)
+        ],
+        borderColor: '#e50914',
+        backgroundColor: 'rgba(229,9,20,0.12)',
+        borderWidth: 2,
+        pointBackgroundColor: '#e50914',
+        pointRadius: 4,
+      },
+      {
+        label: '{{ result.fighter_b }}',
+        data: [
+          {{ result.stats_b.str_acc|float(0) }},
+          {{ result.stats_b.td_acc|float(0) }},
+          Math.min({{ result.stats_b.sub_att|float(0) }} * 20, 100),
+          Math.min({{ result.stats_b.ctrl|float(0) }} / 6, 100),
+          {% set bw = result.stats_b.wins|float(0) %}
+          {% set bl = result.stats_b.losses|float(0) %}
+          {% if bw + bl > 0 %}{{ (bw / (bw + bl) * 100)|round(1) }}{% else %}50{% endif %},
+          Math.min(({{ result.stats_b.reach|float(180) }} - 160) * 2, 100)
+        ],
+        borderColor: '#1a6fe8',
+        backgroundColor: 'rgba(26,111,232,0.12)',
+        borderWidth: 2,
+        pointBackgroundColor: '#1a6fe8',
+        pointRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { labels: { color: '#aaa', font: { size: 11, family: 'DM Sans' } } }
+    },
+    scales: {
+      r: {
+        min: 0, max: 100,
+        ticks: { color: '#444', font: { size: 9 }, stepSize: 25, backdropColor: 'transparent' },
+        pointLabels: { color: '#777', font: { size: 10 } },
+        grid: { color: 'rgba(255,255,255,0.06)' },
+        angleLines: { color: 'rgba(255,255,255,0.06)' },
+      }
+    }
+  }
+});
+
+// ── Bar chart ──
+const barCtx = document.getElementById('barChart').getContext('2d');
+new Chart(barCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Wins', 'Losses', 'KO Wins', 'Sub Wins', 'Dec Wins'],
+    datasets: [
+      {
+        label: '{{ result.fighter_a }}',
+        data: [
+          {{ result.stats_a.wins|float(0) }},
+          {{ result.stats_a.losses|float(0) }},
+          {{ result.stats_a.ko_wins|float(0) }},
+          {{ result.stats_a.sub_wins|float(0) }},
+          {{ result.stats_a.dec_wins|float(0) }}
+        ],
+        backgroundColor: 'rgba(229,9,20,0.65)',
+        borderColor: '#e50914',
+        borderWidth: 1,
+        borderRadius: 4,
+      },
+      {
+        label: '{{ result.fighter_b }}',
+        data: [
+          {{ result.stats_b.wins|float(0) }},
+          {{ result.stats_b.losses|float(0) }},
+          {{ result.stats_b.ko_wins|float(0) }},
+          {{ result.stats_b.sub_wins|float(0) }},
+          {{ result.stats_b.dec_wins|float(0) }}
+        ],
+        backgroundColor: 'rgba(26,111,232,0.65)',
+        borderColor: '#1a6fe8',
+        borderWidth: 1,
+        borderRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: '#aaa', font: { size: 11, family: 'DM Sans' } } } },
+    scales: {
+      x: { ticks: { color: '#666', font: { family: 'DM Sans' } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+      y: { ticks: { color: '#666', font: { family: 'DM Sans' } }, grid: { color: 'rgba(255,255,255,0.05)' }, beginAtZero: true }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
